@@ -60,6 +60,10 @@ function showdel(){
 $("#delBtn").click(showdel);
 $("#delcomfrimBtn").click(function(){
     if(id > 0){
+        $('#editmodal').on('show.bs.modal', function (e) {
+            $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
+        })
+        
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_delete.php',
@@ -90,6 +94,11 @@ $("#editSave").click(function(){
         $(".name-error").show();
         return;
     }
+
+    $('#editmodal').on('show.bs.modal', function (e) {
+        $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
+    })
+      
     var data = [
         $("#date").val(),
         $("#time").val(),

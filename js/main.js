@@ -3,12 +3,17 @@ var month_olympic = [31,29,31,30,31,30,31,31,30,31,30,31];
 var month_normal = [31,28,31,30,31,30,31,31,30,31,30,31];
 var month_name = ["1","2","3","4","5","6","7","8","9","10","11","12"];
 
+var curURL = location.href;
+var url = new URL(curURL);
+var showDate = url.searchParams.get("date");
+
 var holder = document.getElementById("days");
 var prev = document.getElementById("prev");
 var next = document.getElementById("next");
 var ctitle = document.getElementById("calendar-title");
 
 var my_date = new Date();
+if( showDate != null ) my_date = new Date(showDate);
 var my_year = my_date.getFullYear();
 var my_month = my_date.getMonth();
 var my_day = my_date.getDate();
