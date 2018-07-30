@@ -76,7 +76,7 @@ function adddaysList(date){
 
                 html += `
                 <li class="list-group-item">
-                    <a href="Edit.html?id=${data['noon'][i]['id']}">
+                    <a href="edit.html?id=${data['noon'][i]['id']}">
                         <div class="row no-gutters">
                             <div class="col-2 time">${data['noon'][i]['time']}</div>
                             <div class="col-7">
@@ -113,7 +113,7 @@ function adddaysList(date){
 
                 html += `
                 <li class="list-group-item">
-                    <a href="Edit.html?id=${data['night'][i]['id']}">
+                    <a href="edit.html?id=${data['night'][i]['id']}">
                         <div class="row no-gutters">
                             <div class="col-2 time">${data['night'][i]['time']}</div>
                             <div class="col-7">
