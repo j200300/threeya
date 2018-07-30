@@ -8,6 +8,9 @@ ul,li{
     padding: 0;
     margin: 0;
 }
+.pointer{
+    cursor: pointer;
+}
 .form-group{
     margin-bottom: 10px;
 }
