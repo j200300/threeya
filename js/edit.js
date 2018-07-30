@@ -68,7 +68,7 @@ $("#delcomfrimBtn").click(function(){
             },
             dataType: 'json',
             success: function(data){
-                location.href = 'index.html';
+                $('#editmodal').modal('show');
             }
         });
     }
@@ -109,7 +109,7 @@ $("#editSave").click(function(){
             },
             dataType: 'json',
             success: function(data){
-                location.href = 'index.html';
+                $('#editmodal').modal('show');
             }
         });
     }else{
@@ -121,7 +121,7 @@ $("#editSave").click(function(){
             },
             dataType: 'json',
             success: function(data){
-                location.href = 'index.html';
+                $('#editmodal').modal('show');
             }
         });  
     }
