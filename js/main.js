@@ -71,7 +71,7 @@ function adddaysList(date){
             for( var i = 0; i < data['noon'].length; i++ ){
                 var tables = new Array();
                 if( data['noon'][i]['table'] !=""){
-                     tables = data['noon'][i]['table'].split(".");
+                     tables = data['noon'][i]['table'].split(" ");
                 }
 
                 html += `
