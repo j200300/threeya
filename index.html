@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="threeleaves"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>三葉訂桌小幫手</title>
+	<!--boostrap START-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<!--boostrap END-->
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	<link rel="stylesheet" href="style/main.css">
+</head>
+<body>
+	<nav class="navbar navbar-light bg-light">
+		<a href=""></a>
+		<h1><i class="fas fa-leaf"></i>三葉</h1>
+		<button id="addBtn"><i class="fas fa-plus fa-2x"></i></button>
+	</nav>
+	<section class="calendar">
+		<div class="title d-flex justify-content-center pt-2 pb-2">
+			<a href="" id="prev" class="p-1"><i class="fas fa-arrow-left fa-lg"></i></a>
+			<h1 id="calendar-title">月</h1>
+			<a href="" id="next" class="p-1"><i class="fas fa-arrow-right fa-lg"></i></a>
+		</div>
+		<div class="body">
+			<div class="lightgrey week-list">
+			<ul class="row no-gutters">
+				<li>一</li>
+				<li>二</li>
+				<li>三</li>
+				<li>四</li>
+				<li>五</li>
+				<li>六</li>
+				<li>日</li>
+			</ul>
+			</div>
+			<div class="darkgrey body-list">
+			<ul id="days" class="row no-gutters">
+			</ul>
+			</div>
+		</div>
+	</section>
+	<section class="datas">
+		<div class="empty-datas">當日無訂席</div>
+		<div id="noonlabel" class="time-title" data-toggle="collapse" data-target="#noonArea" aria-expanded="false" aria-controls="noonArea">
+			<div class="d-flex">
+				<h2>中午</h2>
+				<i class="ml-auto fas fa-chevron-down"></i>
+			</div>
+		</div>
+		<div class="collapse show" id="noonArea">
+			<ul class="list-group list-group-flush" id="noonList"></ul>
+		</div>
+		<div id="nightlabel" class="time-title" data-toggle="collapse" data-target="#nightArea" aria-expanded="false" aria-controls="nightArea">
+			<div class="d-flex">
+				<h2>晚上</h2>
+				<i class="ml-auto fas fa-chevron-down"></i>
+			</div>
+		</div>
+		<div class="collapse show" id="nightArea">
+			<ul class="list-group list-group-flush" id="nightList"></ul>
+		</div>
+	</section>
+	<!-- Small modal -->
+	<div class="modal fade del-modal" id="delmodal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			是否刪除？
+		</div>
+	</div>
+	</div>
+	<script src="js/main.js"></script>
+</body>
+</html>
