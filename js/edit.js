@@ -5,11 +5,12 @@ const thisday = thisDate.getDate();
 
 var curURL = location.href;
 var url = new URL(curURL);
-var id = url.searchParams.get("id");
+var getID = url.searchParams.get("id");
 var date = url.searchParams.get("date") || thisyear+"/"+(thismonth+1)+"/"+thisday;
 
-getData(id);
 $( function() {
+    getData(getID);
+
     $('#date').datetimepicker({
         format: 'YYYY/M/D',
     });
@@ -17,7 +18,7 @@ $( function() {
         format: 'HH:mm',
     });
 
-    if(id > 0){
+    if(getID > 0){
         $(".navbar h1").html('修改訂席');
     }else{
         if(date!=""){
@@ -25,11 +26,10 @@ $( function() {
             $('#time').val("12:00");
         }
     }
-
 });
 //取消badge的a動作
-$("form a").click(function(){
-    event.preventDefault();
+$("form a").click(function(e){
+    e.preventDefault();
 })
 //點擊姓名標籤
 $(".name-group .badge").click(function(e){
@@ -79,27 +79,27 @@ function getData(id){
         type: 'GET',
         url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_get.php?id='+id,
         dataType: 'json',
-        success: function(data){
+        success: function(response){
             $("#loadingmodal").modal('hide');
             if( id>0 ){
                 $(".modify-show").attr('style','visibility:visible');
-                $("#name").val(data['name']);
-                $("#phone").val(data['cellphone']);
-                $("#price").val(data['price']);
-                $("#note").val(data['note']);
-                $('#date').val(data['date']);
-                $('#time').val(data['time']);
-                var time = data['time'].split(":");
+                $("#name").val(response['name']);
+                $("#phone").val(response['cellphone']);
+                $("#price").val(response['price']);
+                $("#note").val(response['note']);
+                $('#date').val(response['date']);
+                $('#time').val(response['time']);
+                var time = response['time'].split(":");
 
                 //如果時間為15點以前為中午
                 if( time[0] > 15 ){
                     $(".btn-group button").attr("class","btn btn-outline-primary");
                     $("#nightbtn").attr("class","btn btn-primary");
                 }
-                $('#tableNo').val(data['table']);
+                $('#tableNo').val(response['table']);
 
                 //如果狀態為取消將表單設為disabled
-                if(data['cancel'] == 1){
+                if(response['cancel'] == 1){
                     recoverStatus();
                 }
             }
@@ -108,7 +108,7 @@ function getData(id){
 }
 //刪除確認
 $("#delcomfrimBtn").click(function(){
-    if(id > 0){
+    if(getID > 0){
         $('#editmodal').on('show.bs.modal', function (e) {
             $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
         })
@@ -119,10 +119,10 @@ $("#delcomfrimBtn").click(function(){
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_delete.php',
             data:{
-                id:id,
+                id:getID,
             },
             dataType: 'json',
-            success: function(data){
+            success: function(response){
                 $("#loadingmodal").modal('hide');
                 $("#editmodal .modal-title").html('刪除成功')
                 $("#editmodal .modal-body").html('刪除成功');
@@ -136,12 +136,12 @@ $("#delcomfrimBtn").click(function(){
 $("#cancelcomfrimBtn").click(function(){
     $("#cancelmodal").modal('hide');
     $("#loadingmodal").modal('show');
-    if(id > 0){
+    if(getID > 0){
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_cancel.php',
             data:{
-                id:id,
+                id:getID,
             },
             dataType: 'json',
             success: function(response){
@@ -188,17 +188,17 @@ $("#editSave").click(function(){
         $("#note").val(),
     ];
 
-    if(id > 0){
+    if(getID > 0){
         //修改
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_modify.php',
             data:{
-                id:id,
+                id:getID,
                 newData:JSON.stringify(data)
             },
             dataType: 'json',
-            success: function(data){
+            success: function(response){
                 $("#loadingmodal").modal('hide');
                 $("#editmodal .modal-title").html('修改成功')
                 $("#editmodal .modal-body").html('修改成功！');
@@ -214,7 +214,7 @@ $("#editSave").click(function(){
                 newData:JSON.stringify(data)
             },
             dataType: 'json',
-            success: function(data){
+            success: function(response){
                 $("#loadingmodal").modal('hide');
                 $('#editmodal').modal('show');
             }

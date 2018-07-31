@@ -7,11 +7,6 @@ var curURL = location.href;
 var url = new URL(curURL);
 var showDate = url.searchParams.get("date");
 
-var holder = document.getElementById("days");
-var prev = document.getElementById("prev");
-var next = document.getElementById("next");
-var ctitle = document.getElementById("calendar-title");
-
 var my_date = new Date();
 if( showDate != null ) my_date = new Date(showDate);
 var my_year = my_date.getFullYear();
@@ -19,7 +14,44 @@ var my_month = my_date.getMonth();
 var my_day = my_date.getDate();
 
 var monthData = null;
-getData();
+
+var holder = null;
+var ctitle = null;
+$(function(){
+    holder = document.getElementById("days");
+    var prev = document.getElementById("prev");
+    var next = document.getElementById("next");
+    ctitle = document.getElementById("calendar-title");
+
+    $("#addBtn").click(function(){
+        var date = "";
+        if( typeof( $(".greenbox").data("date")) !="undefined" ){
+            date = "&date="+$(".greenbox").data("date");
+        }
+        window.location = "edit.html?id=-1"+date;
+    });
+    prev.onclick = function(e){
+        e.preventDefault();
+        my_month--;
+        if(my_month<0){
+            my_year--;
+            my_month = 11;
+        }
+        getData();
+    }
+    next.onclick = function(e){
+        e.preventDefault();
+        my_month++;
+        if(my_month>11){
+            my_year++;
+            my_month = 0;
+        }
+        getData();
+    }
+
+    getData();
+});
+
 function getData(){
     $("#loadingmodal").modal('show');
     $.ajax({
@@ -86,7 +118,7 @@ function adddaysList(date){
 function build_list_html(data){
     let tables = new Array();
     if( data['table'] !=""){
-            tables = data['table'].split(" ");
+        tables = data['table'].split(" ");
     }
     var cancelClass = "";
     var cancelbadgeClass= "";
@@ -123,13 +155,6 @@ function build_list_html(data){
     return html;
 }
 
-$("#addBtn").click(function(){
-    var date = "";
-    if( typeof( $(".greenbox").data("date")) !="undefined" ){
-        date = "&date="+$(".greenbox").data("date");
-    }
-    window.location = "edit.html?id=-1"+date;
-})
 //获取某年某月第一天是星期几
 function dayStart(month, year) {
 	var tmpDate = new Date(year, month, 1);
@@ -185,23 +210,3 @@ function creatCalendar(){
         });
     }
 }
-
-prev.onclick = function(e){
-	e.preventDefault();
-	my_month--;
-	if(my_month<0){
-		my_year--;
-		my_month = 11;
-    }
-    getData();
-}
-next.onclick = function(e){
-	e.preventDefault();
-	my_month++;
-	if(my_month>11){
-		my_year++;
-		my_month = 0;
-	}
-    getData();
-}
-
