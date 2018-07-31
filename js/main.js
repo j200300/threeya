@@ -74,34 +74,7 @@ function adddaysList(date){
 
         if( data['noon'].length > 0 ){
             for( var i = 0; i < data['noon'].length; i++ ){
-                var tables = new Array();
-                if( data['noon'][i]['table'] !=""){
-                     tables = data['noon'][i]['table'].split(" ");
-                }
-
-                html += `
-                <li class="list-group-item">
-                    <a href="edit.html?id=${data['noon'][i]['id']}">
-                        <div class="row no-gutters">
-                            <div class="col-2 time">${data['noon'][i]['time']}</div>
-                            <div class="col-7">
-                                <div class="tableNO">`
-                                if(tables.length > 0){
-                                    for( var j = 0; j < tables.length; j++ ){
-                                        html += `    <span class="badge badge-primary">${tables[j]}</span>`
-                                    }
-                                }
-                        html += `</div>
-                                <div class="name">${data['noon'][i]['name']}</div>
-                                <div class="phone">${data['noon'][i]['cellphone']}</div>
-                            </div>
-                            <div class="col-3 price">${data['noon'][i]['price']}</div>
-                        </div>`
-                if( data['noon'][i]['note'] != "" ){
-                    html +=  `<div class="note">備註：${data['noon'][i]['note']}</div>`
-                }       
-                html += `    </a>
-                </li>`;
+                html = build_list_html(data);
             }
             $("#noonList").html(html);
             $("#noonlabel").show();
@@ -111,34 +84,7 @@ function adddaysList(date){
         var html = '';
         if( data['night'].length > 0 ){
             for( var i = 0; i < data['night'].length; i++ ){
-                var tables = new Array();
-                if( data['night'][i]['table'] !=""){
-                     tables = data['night'][i]['table'].split(".");
-                }
-
-                html += `
-                <li class="list-group-item">
-                    <a href="edit.html?id=${data['night'][i]['id']}">
-                        <div class="row no-gutters">
-                            <div class="col-2 time">${data['night'][i]['time']}</div>
-                            <div class="col-7">
-                                <div class="tableNO">`
-                                if(tables.length > 0){
-                                    for( var j = 0; j < tables.length; j++ ){
-                                        html += `    <span class="badge badge-primary">${tables[j]}</span>`
-                                    }
-                                }
-                        html += `</div>
-                                <div class="name">${data['night'][i]['name']}</div>
-                                <div class="phone">${data['night'][i]['cellphone']}</div>
-                            </div>
-                            <div class="col-3 price">${data['night'][i]['price']}</div>
-                        </div>`
-                if( data['night'][i]['note'] != "" ){
-                    html +=  `<div class="note">備註：${data['night'][i]['note']}</div>`
-                }       
-                html += `    </a>
-                </li>`;
+                html = build_list_html(data);
             }
             
             $("#nightList").html(html);
@@ -149,6 +95,40 @@ function adddaysList(date){
         $(".empty-datas").show();
     }
 }
+
+function build_list_html(data){
+    let tables = new Array();
+    if( data['table'] !=""){
+            tables = data['table'].split(" ");
+    }
+    let html = '';
+        html += `
+            <li class="list-group-item">
+                <a href="edit.html?id=${data['id']}">
+                    <div class="row no-gutters">
+                        <div class="col-2 time">${data['time']}</div>
+                        <div class="col-7">
+                            <div class="tableNO">`
+                            if(tables.length > 0){
+                                for( var j = 0; j < tables.length; j++ ){
+                                    html += `    <span class="badge badge-primary">${tables[j]}</span>`
+                                }
+                            }
+                    html += `</div>
+                            <div class="name">${data['name']}</div>
+                            <div class="phone">${data['cellphone']}</div>
+                        </div>
+                        <div class="col-3 price">${data['price']}</div>
+                    </div>`
+                if( data['note'] != "" ){
+                    html +=  `<div class="note">備註：${data['note']}</div>`
+                }
+        html += `</a>
+        </li>`;
+    
+    return html;
+}
+
 $("#addBtn").click(function(){
     var date = "";
     if( typeof( $(".greenbox").data("date")) !="undefined" ){
