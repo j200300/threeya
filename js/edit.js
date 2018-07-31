@@ -27,6 +27,20 @@ $( function() {
     }
 
 });
+//取消badge的a動作
+$("form a").click(function(){
+    event.preventDefault();
+})
+//點擊姓名標籤
+$(".name-group .badge").click(function(e){
+    var value = $("#name").val();
+    if( value != "" ){
+        $("#name").val( value+e.target.innerText );
+    }else{
+        $("#name").val( e.target.innerText );
+    }
+    $("#name").focus();
+});
 //點擊價格標籤
 $(".price-group .badge").click(function(e){
     var value = $("#price").val();
@@ -57,14 +71,18 @@ $(".note-group .badge").click(function(e){
     }
     $("#note").focus();
 });
+
+//取得資料
 function getData(id){
+    $("#loadingmodal").modal('show');
     $.ajax({
         type: 'GET',
         url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_get.php?id='+id,
         dataType: 'json',
         success: function(data){
+            $("#loadingmodal").modal('hide');
             if( id>0 ){
-                $("#delBtn").attr('style','visibility:visible');
+                $(".modify-show").attr('style','visibility:visible');
                 $("#name").val(data['name']);
                 $("#phone").val(data['cellphone']);
                 $("#price").val(data['price']);
@@ -79,20 +97,24 @@ function getData(id){
                     $("#nightbtn").attr("class","btn btn-primary");
                 }
                 $('#tableNo').val(data['table']);
+
+                //如果狀態為取消將表單設為disabled
+                if(data['cancel'] == 1){
+                    recoverStatus();
+                }
             }
         }
      });
 }
-function showdel(){
-    $('#delmodal').modal('show');
-}
-$("#delBtn").click(showdel);
+//刪除確認
 $("#delcomfrimBtn").click(function(){
     if(id > 0){
         $('#editmodal').on('show.bs.modal', function (e) {
             $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
         })
-        
+        //處理中
+        $("#delmodal").modal('hide');
+        $("#loadingmodal").modal('show');        
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_delete.php',
@@ -101,7 +123,34 @@ $("#delcomfrimBtn").click(function(){
             },
             dataType: 'json',
             success: function(data){
+                $("#loadingmodal").modal('hide');
+                $("#editmodal .modal-title").html('刪除成功')
+                $("#editmodal .modal-body").html('刪除成功');
                 $('#editmodal').modal('show');
+            }
+        });
+    }
+});
+
+//取消確認
+$("#cancelcomfrimBtn").click(function(){
+    $("#cancelmodal").modal('hide');
+    $("#loadingmodal").modal('show');
+    if(id > 0){
+        $.ajax({
+            type: 'POST',
+            url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_cancel.php',
+            data:{
+                id:id,
+            },
+            dataType: 'json',
+            success: function(response){
+                $("#loadingmodal").modal('hide');
+                if(response.cancel == 1){
+                    recoverStatus();
+                }else{
+                    cancelStatus();
+                }
             }
         });
     }
@@ -127,7 +176,8 @@ $("#editSave").click(function(){
     $('#editmodal').on('show.bs.modal', function (e) {
         $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
     })
-      
+  
+    $("#loadingmodal").modal('show');
     var data = [
         $("#date").val(),
         $("#time").val(),
@@ -149,6 +199,7 @@ $("#editSave").click(function(){
             },
             dataType: 'json',
             success: function(data){
+                $("#loadingmodal").modal('hide');
                 $("#editmodal .modal-title").html('修改成功')
                 $("#editmodal .modal-body").html('修改成功！');
                 $('#editmodal').modal('show');
@@ -164,8 +215,41 @@ $("#editSave").click(function(){
             },
             dataType: 'json',
             success: function(data){
+                $("#loadingmodal").modal('hide');
                 $('#editmodal').modal('show');
             }
         });  
     }
 });
+
+function cancelStatus(){
+    $("#cancelBtn").html('取消');
+    $("#cancelBtn").attr('class','modify-show btn btn-outline-danger');
+    $("#cancelmodal").modal('hide');
+    $("fieldset").prop("disabled",false);
+    $("#date").prop("disabled",false);
+    $("#time").prop("disabled",false);
+    $("#noonbtn").prop("disabled",false);
+    $("#nightbtn").prop("disabled",false);
+    $(".edit form .badge").show();
+
+   //把取消modal改為回覆modal
+   $("#cancelmodal .modal-title").html("取消訂位確認");
+   $("#cancelmodal .modal-body").html("如果此桌訂位取消，請點選確認！<br>取消後，資料將不能修改，但可以恢復訂位。");
+}
+
+function recoverStatus(){
+    $("#cancelBtn").html('恢復');
+    $("#cancelBtn").attr('class','modify-show btn btn-danger');
+    $("#cancelmodal").modal('hide');
+    $("fieldset").prop("disabled",true);
+    $("#date").prop("disabled",true);
+    $("#time").prop("disabled",true);
+    $("#noonbtn").prop("disabled",true);
+    $("#nightbtn").prop("disabled",true);
+   $(".edit form .badge").hide();
+
+   //把取消modal改為回覆modal
+   $("#cancelmodal .modal-title").html("恢復訂桌確認");
+   $("#cancelmodal .modal-body").html("是否恢復此筆訂桌？");
+}

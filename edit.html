@@ -25,69 +25,87 @@
 	<nav class="navbar navbar-light bg-light">
 		<a href="index.html"><i class="fas fa-chevron-left fa-2x"></i></a>
 		<h1><i class="fas fa-leaf"></i>新增訂席</h1>
-		<div id="delBtn" class="pointer" style="visibility: hidden;"><i class="fas fa-trash-alt fa-2x"></i></div>
+		<div id="delBtn" class="modify-show pointer" style="visibility: hidden;" data-toggle="modal" data-target="#delmodal"><i class="fas fa-trash-alt fa-2x"></i></div>
 	</nav>
 	<section class="edit">
 		<div class="container">
 			<form>
-				<div class="btn-group" role="group">
-					<button type="button" id="noonbtn" class="btn btn-primary">中午</button>
-					<button type="button" id="nightbtn" class="btn btn-outline-primary">晚上</button>
-				</div>
-				<div class="form-group row">
-					<div class="col-6">
-						<label for="date">日期</label>
-						<input type="text" class="form-control datetimepicker-input" id="date" data-toggle="datetimepicker" data-target="#date" />
+				<div class="d-flex justify-content-between">
+						<div>
+							<button type="button" class="btn" disabled style="visibility: hidden;">取消</button>
+						</div>
+					<div class="btn-group" role="group">
+						<button type="button" id="noonbtn" class="btn btn-primary">中午</button>
+						<button type="button" id="nightbtn" class="btn btn-outline-primary">晚上</button>
 					</div>
-					<div class="col-6">
-						<label for="time">時間</label>
-						<input type="text" class="form-control datetimepicker-input" id="time" data-toggle="datetimepicker" data-target="#time"/>
+					<div>
+						<button type="button" id="cancelBtn" class="modify-show btn btn-outline-danger" style="visibility: hidden;" data-toggle="modal" data-target="#cancelmodal">取消</button>
 					</div>
 				</div>
+				<fieldset>
+					<div class="form-group row">
+						<div class="col-6">
+							<label for="date">日期</label>
+							<input type="text" class="form-control datetimepicker-input" id="date" data-toggle="datetimepicker" data-target="#date" />
+						</div>
+						<div class="col-6">
+							<label for="time">時間</label>
+							<input type="text" class="form-control datetimepicker-input" id="time" data-toggle="datetimepicker" data-target="#time"/>
+						</div>
+					</div>
+					
+					<div class="form-group name-group">
+						<label for="name">姓名</label>
+						<a href="#" class="badge badge-warning">先生</a>
+						<a href="#" class="badge badge-warning">小姐</a>
+						<input type="text" class="form-control" id="name">
+						<div class="name-error text-danger" style="display: none;">
+							請輸入姓名！
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phone">電話</label>
+						<input type="text" class="form-control" id="phone">
+					</div>
+					<div class="form-group price-group">
+						<label for="price">金額*桌數</label>
+						<a href="#" class="badge badge-warning">3000</a>
+						<a href="#" class="badge badge-warning">3500</a>
+						<a href="#" class="badge badge-warning">4000</a>
+						<a href="#" class="badge badge-warning">5000</a>
+						<a href="#" class="badge badge-warning">6000</a>
+						<a href="#" class="badge badge-warning">*</a>
+						<a href="#" class="badge badge-warning">預</a>
+						<input type="text" class="form-control" id="price">
+					</div>
+					<div class="form-group table-group">
+						<label for="tableNo">桌號碼&nbsp;</label>
+							<a href="#" class="badge badge-warning">A</a>
+							<a href="#" class="badge badge-warning">1F</a>
+							<a href="#" class="badge badge-warning">2F</a>
+							<a href="#" class="badge badge-warning">外帶</a>
+							<a href="#" class="badge badge-warning">外送</a>					
+						<input type="text" class="form-control" id="tableNo">
+						<small class="form-text text-muted">範例：1~3 或 1 2 3</small>
+					</div>
+					<div class="form-group note-group">
+						<label for="note">備註&nbsp;</label>
+						<a href="#" class="badge badge-warning">加：素食</a>
+						<a href="#" class="badge badge-warning">份</a>
+						<a href="#" class="badge badge-warning">要退1</a>
+						<textarea class="form-control" rows="2" id="note"></textarea>
+					</div>
+					<button id="editSave" type="button" class="btn btn-success btn-lg btn-block" >儲存</button>
+				</fieldset>
 				
-				<div class="form-group">
-					<label for="name">姓名</label>
-					<input type="text" class="form-control" id="name">
-					<div class="name-error text-danger" style="display: none;">
-						請輸入姓名！
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="phone">電話</label>
-					<input type="text" class="form-control" id="phone">
-				</div>
-				<div class="form-group price-group">
-					<label for="price">金額*桌數</label>
-					<a href="#" class="badge badge-warning">3000</a>
-					<a href="#" class="badge badge-warning">4000</a>
-					<a href="#" class="badge badge-warning">5000</a>
-					<a href="#" class="badge badge-warning">6000</a>
-					<a href="#" class="badge badge-warning">金額</a>
-					<a href="#" class="badge badge-warning">*</a>
-					<a href="#" class="badge badge-warning">數量</a>
-					<input type="text" class="form-control" id="price">
-				</div>
-				<div class="form-group table-group">
-					<label for="tableNo">桌號碼&nbsp;</label>
-						<a href="#" class="badge badge-warning">A</a>
-						<a href="#" class="badge badge-warning">1F</a>
-						<a href="#" class="badge badge-warning">2F</a>
-						<a href="#" class="badge badge-warning">外帶</a>
-						<a href="#" class="badge badge-warning">外送</a>					
-					<input type="text" class="form-control" id="tableNo">
-					<small class="form-text text-muted">範例：1~3 或 1 2 3</small>
-				</div>
-				<div class="form-group note-group">
-					<label for="note">備註&nbsp;</label>
-					<a href="#" class="badge badge-warning">加：素食</a>
-					<a href="#" class="badge badge-warning">份</a>
-					<a href="#" class="badge badge-warning">要退1</a>
-					<textarea class="form-control" rows="2" id="note"></textarea>
-				</div>
-				<button id="editSave" type="button" class="btn btn-success btn-lg btn-block">儲存</button>
 			</form>
 		</div>
 	</section>
+	<footer>
+		<div class="container">
+			MADE BY HUANG CHIA-YU && JIMMY
+		</div>
+	</footer>
 	<!-- Small modal -->
 	<!-- Modal -->
 	<div class="modal fade" id="delmodal" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -100,11 +118,33 @@
 				</button>
 				</div>
 				<div class="modal-body">
-					是否刪除？
+					<div class="text-danger">刪除後，此筆紀錄將會消失在系統中，無法再恢復，只能請黃家瑜救回資料，請仔細確認後再刪除！<br>如果還不確定，請按下取消訂桌按鈕，非刪除按鈕！</div>
+					
 				</div>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
 				<button id="delcomfrimBtn" type="button" class="btn btn-primary">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="cancelmodal" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title">取消訂位確認</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				</div>
+				<div class="modal-body">
+					如果此桌訂位取消，請點選確認！<br>
+					取消後，資料將不能修改，但可以恢復訂位。
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+				<button id="cancelcomfrimBtn" type="button" class="btn btn-primary">確定</button>
 				</div>
 			</div>
 		</div>
@@ -125,6 +165,18 @@
 				<div class="modal-footer">
 					<a href="index.html" id="editmodal_ok" class="btn btn-primary">確定</a>
 				</div>
+			</div>
+		</div>
+	</div>
+	<!--處理中視窗 -->
+	<div class="modal fade" id="loadingmodal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content text-center">
+				<div class="p-4">
+					<h4>處理中</h4>
+					<div><i class="fas fa-spinner fa-3x"></i></div>
+				</div>
+				
 			</div>
 		</div>
 	</div>

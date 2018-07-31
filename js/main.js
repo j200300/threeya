@@ -18,44 +18,35 @@ var my_year = my_date.getFullYear();
 var my_month = my_date.getMonth();
 var my_day = my_date.getDate();
 
-var monthData;
+var monthData = null;
 getData();
 function getData(){
+    $("#loadingmodal").modal('show');
     $.ajax({
         type: 'GET',
         url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_get.php?month='+my_year+"-"+(my_month+1),
         dataType: 'json',
-        success: function(data){
-            if(data != null){
-                monthData = data;
-                creatCalendar();
+        success: function(response){
+            $("#loadingmodal").modal('hide');
 
-                $(".body-list a").each(function( index ) {
-                    var date = $(this).data("date");
-                    for(key in monthData){
-                        if(key == date){
-                            $(this).next().attr('style','display:block');
-                        }
-                    }
-                });
-                var timeoutId = 0;
-
-                $("#noonList a").on('mousedown', function() {
-                    timeoutId = setTimeout(showdel, 2000);
-                }).on('mouseup mouseleave', function() {
-                    clearTimeout(timeoutId);
-                });
-
-                $("#days a").click(function(e){
-                    if( e.target.tagName == "A"){
-                        var a = e.target;
-                        $("#days a").attr("class","darkgrey");
-                        a.classList = "green greenbox";
-                        var date = e.target.dataset.date;
-                        adddaysList(date);
-                    }
-                });
+            //如果有訂桌資料
+            if(typeof(response['status']) == "undefined"){
+                monthData = response;
+                
             }
+            creatCalendar();
+            //點選月曆日期事件
+            $("#days a").click(function(e){
+                if( e.target.tagName == "A"){
+                    var a = e.target;
+                    $("#days a").attr("class","darkgrey");
+                    a.classList = "green greenbox";
+                    var date = e.target.dataset.date;
+                    if( monthData != null ) adddaysList(date);
+                }
+            });
+
+
         }
      });
 }
@@ -67,7 +58,7 @@ function adddaysList(date){
     $(".time-title").hide();
     $("#noonList").html('');
     $("#nightList").html('');
-
+    $(".date-text").html(date);
     if( typeof(monthData[date]) != "undefined" ){
         data = monthData[date];
         
@@ -100,27 +91,34 @@ function build_list_html(data){
     if( data['table'] !=""){
             tables = data['table'].split(" ");
     }
+    var cancelClass = "";
+    var cancelbadgeClass= "";
+    if( data['cancel'] == 1 ){
+        cancelClass = "line-through";
+        cancelbadgeClass = "line-through-badge";
+    }
+
     let html = '';
         html += `
             <li class="list-group-item">
                 <a href="edit.html?id=${data['id']}">
                     <div class="row no-gutters">
-                        <div class="col-2 time">${data['time']}</div>
+                        <div class="col-2 time ${cancelClass}">${data['time']}</div>
                         <div class="col-7">
                             <div class="tableNO">`
                             if(tables.length > 0){
                                 for( var j = 0; j < tables.length; j++ ){
-                                    html += `    <span class="badge badge-primary">${tables[j]}</span>`
+                                    html += `    <span class="badge badge-primary ${cancelbadgeClass}">${tables[j]}</span>`
                                 }
                             }
                     html += `</div>
-                            <div class="name">${data['name']}</div>
-                            <div class="phone">${data['cellphone']}</div>
+                            <div class="name ${cancelClass}">${data['name']}</div>
+                            <div class="phone ${cancelClass}">${data['cellphone']}</div>
                         </div>
-                        <div class="col-3 price">${data['price']}</div>
+                        <div class="col-3 price ${cancelClass}">${data['price']}</div>
                     </div>`
                 if( data['note'] != "" ){
-                    html +=  `<div class="note">備註：${data['note']}</div>`
+                    html +=  `<div class="note ${cancelClass}">備註：${data['note']}</div>`
                 }
         html += `</a>
         </li>`;
@@ -169,14 +167,26 @@ function creatCalendar(){
 			myclass = " class='lightgrey'"; //当该日期在今天之前时，以浅灰色字体显示
 		}else if (i==my_day && my_year==my_date.getFullYear() && my_month==my_date.getMonth()){
             myclass = " class='green greenbox'"; //当天日期以绿色背景突出显示
-            adddaysList(my_year+"/"+(my_month+1)+"/"+my_day);
+            if( monthData != null ) adddaysList(my_year+"/"+(my_month+1)+"/"+my_day);
 		}else{
 			myclass = " class='darkgrey'"; //当该日期在今天之后时，以深灰字体显示
 		}
 		str += "<li><a"+myclass+" data-date="+my_year+"/"+month_name[my_month]+"/"+i+">"+i+"</a><i class='dot'></i></li>"; //创建日期节点
 	}
 	holder.innerHTML = str; //设置日期显示
-	ctitle.innerHTML = my_year+"年"+month_name[my_month]+"月";
+    ctitle.innerHTML = my_year+"年"+month_name[my_month]+"月";
+    
+    //如果當日有資料顯示紅色底線
+    if( monthData != null ){
+        $(".body-list a").each(function( index ) {
+            var date = $(this).data("date");
+            for(key in monthData){
+                if(key == date){
+                    $(this).next().attr('style','display:block');
+                }
+            }
+        });
+    }
 }
 
 prev.onclick = function(e){

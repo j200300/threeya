@@ -49,7 +49,7 @@
 		<div class="empty-datas">當日無訂席</div>
 		<div id="noonlabel" class="time-title" data-toggle="collapse" data-target="#noonArea" aria-expanded="false" aria-controls="noonArea">
 			<div class="d-flex">
-				<h2>中午</h2>
+				<h2><font class="date-text"></font>&nbsp;中午</h2>
 				<i class="ml-auto fas fa-chevron-down"></i>
 			</div>
 		</div>
@@ -58,7 +58,7 @@
 		</div>
 		<div id="nightlabel" class="time-title" data-toggle="collapse" data-target="#nightArea" aria-expanded="false" aria-controls="nightArea">
 			<div class="d-flex">
-				<h2>晚上</h2>
+				<h2><font class="date-text"></font>&nbsp;晚上</h2>
 				<i class="ml-auto fas fa-chevron-down"></i>
 			</div>
 		</div>
@@ -66,13 +66,22 @@
 			<ul class="list-group list-group-flush" id="nightList"></ul>
 		</div>
 	</section>
-	<!-- Small modal -->
-	<div class="modal fade del-modal" id="delmodal" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-sm">
-		<div class="modal-content">
-			是否刪除？
+	<footer>
+		<div class="container">
+			MADE BY HUANG CHIA-YU && JIMMY
 		</div>
-	</div>
+	</footer>	
+	<!--處理中視窗 -->
+	<div class="modal fade" id="loadingmodal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content text-center">
+				<div class="p-4">
+					<h4>處理中</h4>
+					<div><i class="fas fa-spinner fa-3x"></i></div>
+				</div>
+				
+			</div>
+		</div>
 	</div>
 	<script src="js/main.js"></script>
 </body>
