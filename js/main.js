@@ -74,7 +74,7 @@ function adddaysList(date){
 
         if( data['noon'].length > 0 ){
             for( var i = 0; i < data['noon'].length; i++ ){
-                html = build_list_html(data);
+                html = build_list_html(data['noon'][i]);
             }
             $("#noonList").html(html);
             $("#noonlabel").show();
@@ -84,7 +84,7 @@ function adddaysList(date){
         var html = '';
         if( data['night'].length > 0 ){
             for( var i = 0; i < data['night'].length; i++ ){
-                html = build_list_html(data);
+                html = build_list_html(data['night'][i]);
             }
             
             $("#nightList").html(html);
