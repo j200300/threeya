@@ -54,6 +54,7 @@ $(function(){
 
 function getData(){
     $("#loadingmodal").modal('show');
+    
     $.ajax({
         type: 'GET',
         url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_get.php?month='+my_year+"-"+(my_month+1),
