@@ -27,12 +27,9 @@ function getData(){
         url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_get.php?month='+my_year+"-"+(my_month+1),
         dataType: 'json',
         success: function(response){
-            $("#loadingmodal").modal('hide');
-
             //如果有訂桌資料
             if(typeof(response['status']) == "undefined"){
                 monthData = response;
-                
             }
             creatCalendar();
             //點選月曆日期事件
@@ -45,8 +42,8 @@ function getData(){
                     if( monthData != null ) adddaysList(date);
                 }
             });
-
-
+            
+            $("#loadingmodal").modal('hide');
         }
      });
 }
