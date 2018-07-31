@@ -56,17 +56,32 @@
 					<label for="phone">電話</label>
 					<input type="text" class="form-control" id="phone">
 				</div>
-				<div class="form-group">
+				<div class="form-group price-group">
 					<label for="price">金額*桌數</label>
+					<a href="#" class="badge badge-warning">3000</a>
+					<a href="#" class="badge badge-warning">4000</a>
+					<a href="#" class="badge badge-warning">5000</a>
+					<a href="#" class="badge badge-warning">6000</a>
+					<a href="#" class="badge badge-warning">金額</a>
+					<a href="#" class="badge badge-warning">*</a>
+					<a href="#" class="badge badge-warning">數量</a>
 					<input type="text" class="form-control" id="price">
 				</div>
-				<div class="form-group">
-						<label for="tableNo">桌號碼</label>
-						<input type="text" class="form-control" id="tableNo">
-						<small class="form-text text-muted">範例：1~3 或 1 2 3</small>
-					</div>
-				<div class="form-group">
-					<label for="note">備註</label>
+				<div class="form-group table-group">
+					<label for="tableNo">桌號碼&nbsp;</label>
+						<a href="#" class="badge badge-warning">A</a>
+						<a href="#" class="badge badge-warning">1F</a>
+						<a href="#" class="badge badge-warning">2F</a>
+						<a href="#" class="badge badge-warning">外帶</a>
+						<a href="#" class="badge badge-warning">外送</a>					
+					<input type="text" class="form-control" id="tableNo">
+					<small class="form-text text-muted">範例：1~3 或 1 2 3</small>
+				</div>
+				<div class="form-group note-group">
+					<label for="note">備註&nbsp;</label>
+					<a href="#" class="badge badge-warning">加：素食</a>
+					<a href="#" class="badge badge-warning">份</a>
+					<a href="#" class="badge badge-warning">要退1</a>
 					<textarea class="form-control" rows="2" id="note"></textarea>
 				</div>
 				<button id="editSave" type="button" class="btn btn-success btn-lg btn-block">儲存</button>
@@ -99,13 +114,13 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-				<h5 class="modal-title">修改成功</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<h5 class="modal-title">新增成功</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				</div>
 				<div class="modal-body">
-					修改成功！是否回到首頁？
+					新增成功！
 				</div>
 				<div class="modal-footer">
 					<a href="index.html" id="editmodal_ok" class="btn btn-primary">確定</a>

@@ -70,24 +70,23 @@ function adddaysList(date){
 
     if( typeof(monthData[date]) != "undefined" ){
         data = monthData[date];
-        var html = '';
-
+        
+        $("#noonList").html('');
         if( data['noon'].length > 0 ){
             for( var i = 0; i < data['noon'].length; i++ ){
-                html = build_list_html(data['noon'][i]);
+                $("#noonList").append( build_list_html(data['noon'][i]) );
             }
-            $("#noonList").html(html);
+            
             $("#noonlabel").show();
             $(".empty-datas").hide();
         }
         
-        var html = '';
+        $("#nightList").html('');
         if( data['night'].length > 0 ){
             for( var i = 0; i < data['night'].length; i++ ){
-                html = build_list_html(data['night'][i]);
+                $("#nightList").append( build_list_html(data['night'][i]) );
             }
             
-            $("#nightList").html(html);
             $("#nightlabel").show();
             $(".empty-datas").hide();
         }

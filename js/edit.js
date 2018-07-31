@@ -27,7 +27,36 @@ $( function() {
     }
 
 });
-
+//點擊價格標籤
+$(".price-group .badge").click(function(e){
+    var value = $("#price").val();
+    if( value != "" ){
+        $("#price").val( value+e.target.innerText );
+    }else{
+        $("#price").val( e.target.innerText );
+    }
+    $("#price").focus();
+});
+//點擊桌位標籤
+$(".table-group .badge").click(function(e){
+    var value = $("#tableNo").val();
+    if( value != "" ){
+        $("#tableNo").val( value+' '+e.target.innerText );
+    }else{
+        $("#tableNo").val( e.target.innerText );
+    }
+    $("#tableNo").focus();
+});
+//點擊備註標籤
+$(".note-group .badge").click(function(e){
+    var value = $("#note").val();
+    if( value != "" ){
+        $("#note").val( value+' '+e.target.innerText );
+    }else{
+        $("#note").val( e.target.innerText );
+    }
+    $("#note").focus();
+});
 function getData(id){
     $.ajax({
         type: 'GET',
@@ -94,7 +123,7 @@ $("#editSave").click(function(){
         $(".name-error").show();
         return;
     }
-
+    //設定回首頁指定日期
     $('#editmodal').on('show.bs.modal', function (e) {
         $("#editmodal_ok").attr("href", "index.html?date="+$("#date").val());
     })
@@ -108,7 +137,9 @@ $("#editSave").click(function(){
         $("#phone").val(),
         $("#note").val(),
     ];
+
     if(id > 0){
+        //修改
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_modify.php',
@@ -118,10 +149,13 @@ $("#editSave").click(function(){
             },
             dataType: 'json',
             success: function(data){
+                $("#editmodal .modal-title").html('修改成功')
+                $("#editmodal .modal-body").html('修改成功！');
                 $('#editmodal').modal('show');
             }
         });
     }else{
+        //新增
         $.ajax({
             type: 'POST',
             url: 'https://threeya.azurewebsites.net/linebot/sheetapi/api_add.php',
