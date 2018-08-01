@@ -162,7 +162,7 @@ $(".btn-group button").click(function(e){
     if( e.target.innerText == "中午"){
         $('#time').val("12:00");
     }else{
-        $('#time').val("17:00");
+        $('#time').val("18:00");
     }
 });
 $("#editSave").click(function(){
