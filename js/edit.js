@@ -92,7 +92,7 @@ function getData(id){
                 var time = response['time'].split(":");
 
                 //如果時間為15點以前為中午
-                if( time[0] > 15 ){
+                if( time[0] > 18 ){
                     $(".btn-group button").attr("class","btn btn-outline-primary");
                     $("#nightbtn").attr("class","btn btn-primary");
                 }
